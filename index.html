@@ -277,6 +277,40 @@
       box-shadow: 0 0 20px rgba(255,255,255,0.6);
       cursor: pointer;
     }
+    @media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    margin: 5px 0;
+  }
+
+  .hero {
+    padding-top: 150px; /* espacio para que no se esconda */
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 24px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+}
   </style>
 </head>
 <body>
