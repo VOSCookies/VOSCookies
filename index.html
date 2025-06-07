@@ -476,5 +476,127 @@
   });
 </script>
 
+<!-- Contenedor para mostrar reseñas guardadas -->
+<section id="reviews-section" style="max-width: 400px; position: fixed; top: 80px; right: 10px; background: #fff0f5; padding: 1rem; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-height: 80vh; overflow-y: auto;">
+  <h3 style="color: #a675d0; margin-top: 0;">Opiniones de nuestros clientes</h3>
+  <div id="reviews-list">
+    <!-- Aquí se mostrarán las reseñas -->
+  </div>
+</section>
+
+<!-- Popup para dejar reseña -->
+<div id="review-popup" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+ background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.3); z-index: 3000; max-width: 350px; width: 90%;">
+  <h3>Dejanos tu reseña</h3>
+  <form id="review-form">
+    <label for="review-name">Nombre:</label>
+    <input type="text" id="review-name" name="review-name" required style="width: 100%; padding: 0.4rem; margin-bottom: 0.8rem; border-radius: 6px; border: 1px solid #ccc;" />
+    
+    <label for="review-rating">Calificación:</label>
+    <select id="review-rating" name="review-rating" required style="width: 100%; padding: 0.4rem; margin-bottom: 0.8rem; border-radius: 6px; border: 1px solid #ccc;">
+      <option value="">Selecciona</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="1">1 ⭐</option>
+    </select>
+    
+    <label for="review-comment">Comentario:</label>
+    <textarea id="review-comment" name="review-comment" rows="4" required style="width: 100%; padding: 0.4rem; border-radius: 6px; border: 1px solid #ccc; resize: vertical;"></textarea>
+    
+    <button type="submit" style="background-color: #ff80b3; color: white; border: none; padding: 0.5rem 1rem; border-radius: 25px; font-weight: bold; cursor: pointer; width: 100%;">Enviar</button>
+    <button type="button" id="review-cancel" style="margin-top: 0.5rem; background: #ccc; width: 100%; border-radius: 25px; border: none; cursor: pointer;">Cancelar</button>
+  </form>
+</div>
+
+<script>
+  // Funciones para manejar las reseñas en localStorage
+  function getReviews() {
+    return JSON.parse(localStorage.getItem('vosCookiesReviews') || '[]');
+  }
+
+  function saveReview(review) {
+    const reviews = getReviews();
+    reviews.push(review);
+    localStorage.setItem('vosCookiesReviews', JSON.stringify(reviews));
+  }
+
+  // Mostrar reseñas en el panel lateral
+  function displayReviews() {
+    const container = document.getElementById('reviews-list');
+    const reviews = getReviews();
+    if (reviews.length === 0) {
+      container.innerHTML = '<p>Aún no hay reseñas. Sé el primero en dejar la tuya!</p>';
+      return;
+    }
+    container.innerHTML = '';
+    reviews.slice().reverse().forEach(r => {
+      const div = document.createElement('div');
+      div.style.borderBottom = '1px solid #dca0cf';
+      div.style.padding = '0.5rem 0';
+      div.innerHTML = `
+        <strong>${escapeHtml(r.name)}</strong> - <em>${r.rating} ⭐</em><br>
+        <p style="margin: 0.3rem 0;">${escapeHtml(r.comment)}</p>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  // Escapa texto para evitar código malicioso (XSS)
+  function escapeHtml(text) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+  }
+
+  // Mostrar popup para dejar reseña
+  function showReviewPopup() {
+    document.getElementById('review-popup').style.display = 'block';
+  }
+
+  // Ocultar popup
+  function hideReviewPopup() {
+    document.getElementById('review-popup').style.display = 'none';
+  }
+
+  // Esperar 10 minutos para mostrar popup (600000 ms)
+  setTimeout(() => {
+    showReviewPopup();
+  }, 600000); // 10 minutos
+
+  // Manejo del formulario de reseña
+  document.getElementById('review-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = this['review-name'].value.trim();
+    const rating = this['review-rating'].value;
+    const comment = this['review-comment'].value.trim();
+
+    if (!name || !rating || !comment) {
+      alert('Por favor, completa todos los campos.');
+      return;
+    }
+
+    const review = { name, rating, comment };
+    saveReview(review);
+    displayReviews();
+    hideReviewPopup();
+    this.reset();
+    alert('¡Gracias por tu reseña!');
+  });
+
+  // Cancelar popup
+  document.getElementById('review-cancel').addEventListener('click', () => {
+    hideReviewPopup();
+  });
+
+  // Mostrar las reseñas guardadas al cargar la página
+  displayReviews();
+</script> 
 </body>
 </html>
