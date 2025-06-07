@@ -2,26 +2,33 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>VOS Cookies</title>
   <style>
-   body {
-  margin: 0;
-  padding-top: 70px;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  background: linear-gradient(to bottom right, #ffe6f0, #e6e6ff);
-  color: #5a4b81;
-  font-size: 18px;
-  line-height: 1.5;
-}
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
-/* Ajustes para pantallas pequeñas (celular) */
-@media (max-width: 768px) {
-  body {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-  }
-}
+    body {
+      margin: 0;
+      padding-top: 70px;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom right, #ffe6f0, #e6e6ff);
+      color: #5a4b81;
+      font-size: 18px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+      }
+    }
 
     header {
       background: white;
@@ -31,36 +38,49 @@
       left: 0;
       z-index: 1000;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
     }
 
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
+      width: 90%;
+      max-width: 1200px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     nav .logo-title {
       display: flex;
       align-items: center;
+      gap: 10px;
+      flex: 1 1 200px;
     }
 
     nav .logo-title img {
       height: 50px;
-      margin-right: 10px;
       border-radius: 8px;
       object-fit: contain;
+      flex-shrink: 0;
     }
 
     nav h1 {
       color: #ff80b3;
       font-size: 2rem;
       margin: 0;
+      white-space: nowrap;
     }
 
-    nav div {
+    nav div.menu-links {
       display: flex;
       gap: 1rem;
+      flex-wrap: wrap;
+      flex: 2 1 400px;
+      justify-content: flex-end;
     }
 
     nav a {
@@ -68,21 +88,33 @@
       color: #5a4b81;
       font-weight: bold;
       transition: color 0.3s ease;
+      padding: 6px 8px;
+      border-radius: 6px;
     }
 
-    nav a:hover {
+    nav a:hover,
+    nav a:focus {
       color: #a675d0;
+      background-color: rgba(166, 117, 208, 0.1);
+      outline: none;
     }
 
     section {
       padding: 6rem 2rem 4rem 2rem;
       text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .hero {
       background: url('https://wallpapers.com/images/hd/3440x1440p-cookies-background-3440-x-1440-dkhiwj9fc1hdavpw.jpg') no-repeat center center/cover;
       color: white;
       padding: 10rem 2rem;
+      position: relative;
+      min-height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .hero h2 {
@@ -92,6 +124,7 @@
       padding: 1rem;
       border-radius: 10px;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+      max-width: 90vw;
     }
 
     .section-title {
@@ -104,7 +137,7 @@
       background: white;
       padding: 1rem;
       margin: 1rem auto;
-      max-width: 500px;
+      max-width: 600px;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       text-align: left;
@@ -126,25 +159,28 @@
       width: 200px;
       padding: 1rem;
       text-align: center;
-      cursor: default;
+      cursor: pointer;
       transition: transform 0.2s ease;
+      user-select: none;
     }
 
-    .gallery-item:hover {
+    .gallery-item:hover,
+    .gallery-item:focus-within {
       transform: scale(1.05);
-      cursor: pointer;
+      outline: none;
     }
 
     .gallery-item img {
       width: 100%;
       border-radius: 10px;
       cursor: zoom-in;
+      display: block;
     }
 
     .price {
       font-weight: bold;
       color: #a675d0;
-      margin: 0.5rem 0 0 0;
+      margin-top: 0.5rem;
     }
 
     .whatsapp-button {
@@ -159,10 +195,14 @@
       margin-top: 1.5rem;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       transition: background-color 0.3s ease;
+      cursor: pointer;
+      user-select: none;
     }
 
-    .whatsapp-button:hover {
+    .whatsapp-button:hover,
+    .whatsapp-button:focus {
       background-color: #1ebe5d;
+      outline: none;
     }
 
     footer {
@@ -182,8 +222,10 @@
       transition: color 0.3s ease;
     }
 
-    .contact a:hover {
+    .contact a:hover,
+    .contact a:focus {
       color: #a675d0;
+      outline: none;
     }
 
     form {
@@ -199,7 +241,7 @@
       color: #5a4b81;
     }
 
-    form input, form textarea {
+    form input, form textarea, form select {
       width: 100%;
       padding: 0.5rem;
       margin-top: 0.25rem;
@@ -208,6 +250,7 @@
       font-family: inherit;
       font-size: 1rem;
       resize: vertical;
+      box-sizing: border-box;
     }
 
     form button {
@@ -221,21 +264,28 @@
       cursor: pointer;
       font-size: 1.1rem;
       transition: background-color 0.3s ease;
+      user-select: none;
     }
 
-    form button:hover {
+    form button:hover,
+    form button:focus {
       background-color: #d4699a;
+      outline: none;
     }
+
+    /* Responsive */
 
     @media (max-width: 600px) {
-      nav div {
+      nav div.menu-links {
         flex-direction: column;
         gap: 0.5rem;
+        width: 100%;
+        justify-content: center;
       }
 
       nav a {
-        margin: 0.3rem 0;
         font-size: 1.1rem;
+        padding: 10px;
       }
 
       .gallery {
@@ -250,6 +300,7 @@
 
       .hero {
         padding: 6rem 1rem;
+        min-height: 200px;
       }
 
       .hero h2 {
@@ -257,346 +308,171 @@
       }
     }
 
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 0;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      nav div.menu-links {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+    }
+
+    /* Lightbox styles */
     #lightbox {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: rgba(0,0,0,0.8);
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 2000;
+      z-index: 1500;
+      cursor: zoom-out;
     }
 
     #lightbox img {
       max-width: 90%;
       max-height: 90%;
       border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.6);
-      cursor: pointer;
+      box-shadow: 0 0 20px #fff;
     }
-    @media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-    padding: 10px 0;
-  }
 
-  nav div {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav div a {
-    margin: 5px 0;
-  }
-
-  .hero {
-    padding-top: 150px; /* espacio para que no se esconda el texto */
-    text-align: center;
-  }
-
-  .hero h2 {
-    font-size: 24px;
-  }
-}
   </style>
 </head>
 <body>
   <header>
     <nav>
-      <div class="logo-title">
-        <img src="https://i.imgur.com/fgGeR34.jpeg" alt="Logo VOS Cookies" />
+      <div class="logo-title" aria-label="Logo y título">
+        <img src="https://cdn-icons-png.flaticon.com/512/1981/1981466.png" alt="Icono de galleta" />
         <h1>VOS Cookies</h1>
       </div>
-      <div>
-        <a href="#inicio" title="Inicio">Inicio</a>
-        <a href="#quienes" title="Quiénes somos">Quiénes somos</a>
-        <a href="#menu" title="Menú">Menú</a>
-        <a href="#comprar" title="Cómo comprar">Cómo comprar</a>
-        <a href="#pedido" title="Haz tu pedido">Haz tu pedido</a>
-        <a href="#contacto" title="Contacto">Contacto</a>
-        <a href="#sugerencias" title="Buzón de sugerencias">Sugerencias</a>
+      <div class="menu-links" role="navigation" aria-label="Menú principal">
+        <a href="#inicio">Inicio</a>
+        <a href="#quienes-somos">Quiénes somos</a>
+        <a href="#como-comprar">Cómo comprar</a>
+        <a href="#contacto">Contacto</a>
       </div>
     </nav>
   </header>
 
   <main>
-    <section class="hero" id="inicio">
-      <h2>VOS Cookie, sabor y alegría,<br>para darte siempre un buen día.</h2>
+    <section id="inicio" class="hero" role="banner" aria-label="Imagen principal con lema">
+      <h2>VOS Cookie, dulce tentación, te roba el corazón con cada porción.</h2>
     </section>
 
-    <section id="quienes">
-      <h3 class="section-title">¿Quiénes somos?</h3>
+    <section id="quienes-somos" aria-labelledby="titulo-quienes">
+      <h2 id="titulo-quienes" class="section-title">Quiénes somos</h2>
       <div class="card">
-        <img src="https://i.imgur.com/Z3UMS4g.jpeg" alt="Nosotras - Valentina, Oriana y Sara" style="width:100%; border-radius: 15px; margin-bottom: 1rem;">
-        <p>Somos Valentina, Oriana y Sara, tres amigas que aman hornear y compartir dulzura. Creamos VOS Cookies para llevarte galletas caseras hechas con amor, diversión y mucha creatividad.</p>
+        <p>Somos tres amigas unidas por la pasión de hornear las mejores galletas con amor y dedicación. Nuestra misión es endulzar tus días con cada bocado de nuestras deliciosas creaciones.</p>
       </div>
     </section>
 
-    <section id="menu" class="section">
-      <h2>Menú</h2>
+    <section id="como-comprar" aria-labelledby="titulo-como">
+      <h2 id="titulo-como" class="section-title">Cómo comprar</h2>
+      <div class="card">
+        <p>Para pedir tus galletas favoritas, contáctanos por WhatsApp o envíanos un correo. Te guiaremos para que elijas el sabor perfecto y recibirás tu pedido en la puerta de tu casa.</p>
+        <a href="https://wa.me/1234567890" target="_blank" rel="noopener" class="whatsapp-button" aria-label="Contactar por WhatsApp">¡Haz tu pedido por WhatsApp!</a>
+      </div>
+    </section>
+
+    <section id="galeria" aria-label="Galería de productos">
+      <h2 class="section-title">Nuestros sabores</h2>
       <div class="gallery">
-        <div class="gallery-item">
-          <img src="https://www.cocinadelirante.com/800x600/filters:format(webp):quality(75)/sites/default/files/images/2018/08/galletas-caseras-de-chispas-de-chocolate-sin-horno.jpg" alt="Cookie clásica" />
-          <p class="price">Galleta de Chispas de Chocolate - 2€</p>
+        <div tabindex="0" class="gallery-item" aria-describedby="desc1" role="button" aria-label="Galleta de chocolate">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80" alt="Galleta de chocolate" />
+          <p id="desc1" class="price">Precio: $100</p>
         </div>
-        <div class="gallery-item">
-          <img src="https://s1.elespanol.com/2023/04/09/cocinillas/recetas/postres/754934523_232288662_1706x960.jpg" alt="Cookie con chips" />
-          <p class="price">Galleta de Chocolate - 1,5€</p>
+        <div tabindex="0" class="gallery-item" aria-describedby="desc2" role="button" aria-label="Galleta de vainilla">
+          <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=400&q=80" alt="Galleta de vainilla" />
+          <p id="desc2" class="price">Precio: $90</p>
         </div>
-        <div class="gallery-item">
-          <img src="https://todoinfantil.com/img/recetas/Galletas%20con%20M&M.jpg" alt="Cookie arcoíris" />
-          <p class="price">Galleta de Lunetas de Chocolate- 1€</p>
-        </div>
-        <div class="gallery-item">
-          <img src="https://i.pinimg.com/736x/6b/1b/25/6b1b25946b7013ea9acbc76c95c792f8.jpg" alt="Cookie rellena" />
-          <p class="price">Galleta de Pistache - 2,5€</p>
-        </div>
-        <div class="gallery-item">
-          <img src="https://i0.wp.com/anandaweb.com/wp-content/uploads/2024/04/Fotos-didi_siesa_rappi_2-16.jpg?fit=1242%2C1241&ssl=1" alt="Cookie corazón" />
-          <p class="price">Galleta Red Velvet - 2€</p>
+        <div tabindex="0" class="gallery-item" aria-describedby="desc3" role="button" aria-label="Galleta de avena">
+          <img src="https://images.unsplash.com/photo-1517686469429-4b8b9e7a13d0?auto=format&fit=crop&w=400&q=80" alt="Galleta de avena" />
+          <p id="desc3" class="price">Precio: $110</p>
         </div>
       </div>
     </section>
 
-    <section id="comprar">
-      <h3 class="section-title">¿Cómo comprar?</h3>
-      <div class="card">
-        <p>Hacer tu pedido es súper fácil:</p>
-        <ol style="max-width: 400px; margin: 0 auto;">
-          <li>Elije tus Galletas favotitas del menú.</li>
-          <li>Elije que paquete llevar 3, 6 o 12.</li>
-          <li>Escribenos por WhatsApp y te atenderemos lo antes posible.</li>
-        </ol>
+    <section id="contacto" aria-labelledby="titulo-contacto">
+      <h2 id="titulo-contacto" class="section-title">Contacto</h2>
+      <div class="contact">
+        <a href="https://instagram.com/voscookies" target="_blank" rel="noopener" aria-label="Visitar Instagram de VOS Cookies">Instagram</a> |
+        <a href="mailto:voscookies@gmail.com" aria-label="Enviar email a VOS Cookies">Email</a> |
+        <a href="https://wa.me/1234567890" target="_blank" rel="noopener" aria-label="Enviar mensaje WhatsApp a VOS Cookies">WhatsApp</a> |
+        <a href="https://tiktok.com/@voscookies" target="_blank" rel="noopener" aria-label="Visitar TikTok de VOS Cookies">TikTok</a>
       </div>
+
+      <form aria-label="Formulario de contacto">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
     </section>
-
-    <section id="pedido">
-      <h3 class="section-title">Haz tu pedido</h3>
-      <div class="card">
-        <p>Para hacer tu pedido rápido, contactanos por WhatsApp:</p>
-        <a class="whatsapp-button" href="https://wa.me/622880107" target="_blank" rel="noopener noreferrer">¡Hacemos tu pedido!</a>
-      </div>
-    </section>
-
-    <section id="contacto">
-      <h3 class="section-title">Contacto</h3>
-      <div class="card contact">
-        <p>Podés encontrarnos en nuestras redes:</p>
-        <a href="https://www.instagram.com/vos_cookies" target="_blank" rel="noopener noreferrer">Instagram</a> |
-        <a href="https://www.tiktok.com/@tvoscookies" target="_blank" rel="noopener noreferrer">TikTok</a> |
-        <a href="mailto:tvoscookies@gmail.com">Email</a> |
-        <a href="https://wa.me/603654244" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      </div>
-    </section>
-
-    <section class="sugerencias">
-  <h3>Enviános tus sugerencias</h3>
-  <form id="suggestion-form">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required />
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required />
-
-    <label for="mensaje">Mensaje:</label>
-    <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-
-    <button type="submit">Enviar sugerencia</button>
-  </form>
-  <p id="form-message" style="color:green; display:none;">¡Gracias por tu sugerencia!</p>
-  <p id="form-error" style="color:red; display:none;">Ocurrió un error. Por favor, intentá más tarde.</p>
-</section>
-
   </main>
 
   <footer>
-    &copy; 2025 VOS Cookies. Hecho con Amor de Valen, Ori y sara.
+    <p>© 2025 VOS Cookies. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- Lightbox para ampliar imagenes -->
-  <div id="lightbox">
-    <img src="" alt="Imagen ampliada" />
+  <!-- Lightbox para ampliar imágenes -->
+  <div id="lightbox" role="dialog" aria-modal="true" tabindex="-1">
+    <img alt="" />
   </div>
 
   <script>
-    // Lightbox simple
+    // Lightbox simple para ampliar las imágenes
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = lightbox.querySelector('img');
-    const galleryItems = document.querySelectorAll('.gallery-item img');
+    const galleryItems = document.querySelectorAll('.gallery-item');
 
-    galleryItems.forEach(img => {
-      img.addEventListener('click', () => {
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
         lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
         lightbox.style.display = 'flex';
+        lightbox.focus();
+      });
+
+      item.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        }
       });
     });
 
     lightbox.addEventListener('click', () => {
       lightbox.style.display = 'none';
       lightboxImage.src = '';
+      lightboxImage.alt = '';
+    });
+
+    lightbox.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        lightbox.style.display = 'none';
+        lightboxImage.src = '';
+        lightboxImage.alt = '';
+      }
     });
   </script>
-
-<script>
-  const form = document.getElementById('suggestion-form');
-  const formMessage = document.getElementById('form-message');
-  const formError = document.getElementById('form-error');
-  
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    formMessage.style.display = 'none';
-    formError.style.display = 'none';
-    
-    const formData = new FormData(form);
-    
-    try {
-      const response = await fetch('https://formspree.io/f/mqabebgg', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json'
-        },
-        body: formData
-      });
-      
-      if (response.ok) {
-        formMessage.style.display = 'block';
-        form.reset();
-      } else {
-        formError.style.display = 'block';
-      }
-    } catch (error) {
-      formError.style.display = 'block';
-    }
-  });
-</script>
-
-<!-- Contenedor para mostrar reseñas guardadas -->
-<section id="reviews-section" style="max-width: 400px; position: fixed; top: 80px; right: 10px; background: #fff0f5; padding: 1rem; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-height: 80vh; overflow-y: auto;">
-  <h3 style="color: #a675d0; margin-top: 0;">Opiniones de nuestros clientes</h3>
-  <div id="reviews-list">
-    <!-- Aquí se mostrarán las reseñas -->
-  </div>
-</section>
-
-<!-- Popup para dejar reseña -->
-<div id="review-popup" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
- background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.3); z-index: 3000; max-width: 350px; width: 90%;">
-  <h3>Dejanos tu reseña</h3>
-  <form id="review-form">
-    <label for="review-name">Nombre:</label>
-    <input type="text" id="review-name" name="review-name" required style="width: 100%; padding: 0.4rem; margin-bottom: 0.8rem; border-radius: 6px; border: 1px solid #ccc;" />
-    
-    <label for="review-rating">Calificación:</label>
-    <select id="review-rating" name="review-rating" required style="width: 100%; padding: 0.4rem; margin-bottom: 0.8rem; border-radius: 6px; border: 1px solid #ccc;">
-      <option value="">Selecciona</option>
-      <option value="5">5 ⭐⭐⭐⭐⭐</option>
-      <option value="4">4 ⭐⭐⭐⭐</option>
-      <option value="3">3 ⭐⭐⭐</option>
-      <option value="2">2 ⭐⭐</option>
-      <option value="1">1 ⭐</option>
-    </select>
-    
-    <label for="review-comment">Comentario:</label>
-    <textarea id="review-comment" name="review-comment" rows="4" required style="width: 100%; padding: 0.4rem; border-radius: 6px; border: 1px solid #ccc; resize: vertical;"></textarea>
-    
-    <button type="submit" style="background-color: #ff80b3; color: white; border: none; padding: 0.5rem 1rem; border-radius: 25px; font-weight: bold; cursor: pointer; width: 100%;">Enviar</button>
-    <button type="button" id="review-cancel" style="margin-top: 0.5rem; background: #ccc; width: 100%; border-radius: 25px; border: none; cursor: pointer;">Cancelar</button>
-  </form>
-</div>
-
-<script>
-  // Funciones para manejar las reseñas en localStorage
-  function getReviews() {
-    return JSON.parse(localStorage.getItem('vosCookiesReviews') || '[]');
-  }
-
-  function saveReview(review) {
-    const reviews = getReviews();
-    reviews.push(review);
-    localStorage.setItem('vosCookiesReviews', JSON.stringify(reviews));
-  }
-
-  // Mostrar reseñas en el panel lateral
-  function displayReviews() {
-    const container = document.getElementById('reviews-list');
-    const reviews = getReviews();
-    if (reviews.length === 0) {
-      container.innerHTML = '<p>Aún no hay reseñas. Sé el primero en dejar la tuya!</p>';
-      return;
-    }
-    container.innerHTML = '';
-    reviews.slice().reverse().forEach(r => {
-      const div = document.createElement('div');
-      div.style.borderBottom = '1px solid #dca0cf';
-      div.style.padding = '0.5rem 0';
-      div.innerHTML = `
-        <strong>${escapeHtml(r.name)}</strong> - <em>${r.rating} ⭐</em><br>
-        <p style="margin: 0.3rem 0;">${escapeHtml(r.comment)}</p>
-      `;
-      container.appendChild(div);
-    });
-  }
-
-  // Escapa texto para evitar código malicioso (XSS)
-  function escapeHtml(text) {
-    const map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    };
-    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-  }
-
-  // Mostrar popup para dejar reseña
-  function showReviewPopup() {
-    document.getElementById('review-popup').style.display = 'block';
-  }
-
-  // Ocultar popup
-  function hideReviewPopup() {
-    document.getElementById('review-popup').style.display = 'none';
-  }
-
-  // Esperar 10 minutos para mostrar popup (600000 ms)
-  setTimeout(() => {
-    showReviewPopup();
-  }, 600000); // 10 minutos
-
-  // Manejo del formulario de reseña
-  document.getElementById('review-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = this['review-name'].value.trim();
-    const rating = this['review-rating'].value;
-    const comment = this['review-comment'].value.trim();
-
-    if (!name || !rating || !comment) {
-      alert('Por favor, completa todos los campos.');
-      return;
-    }
-
-    const review = { name, rating, comment };
-    saveReview(review);
-    displayReviews();
-    hideReviewPopup();
-    this.reset();
-    alert('¡Gracias por tu reseña!');
-  });
-
-  // Cancelar popup
-  document.getElementById('review-cancel').addEventListener('click', () => {
-    hideReviewPopup();
-  });
-
-  // Mostrar las reseñas guardadas al cargar la página
-  displayReviews();
-</script> 
 </body>
 </html>
