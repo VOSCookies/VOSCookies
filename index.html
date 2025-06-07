@@ -347,7 +347,89 @@
       border-radius: 15px;
       box-shadow: 0 0 20px #fff;
     }
+ #reseñas {
+    max-width: 600px;
+    margin: 2rem auto 4rem auto;
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
 
+  /* Formulario */
+  #reseñas label {
+    display: block;
+    margin: 0.8rem 0 0.3rem 0;
+    font-weight: bold;
+  }
+  #reseñas textarea, #reseñas input[type="text"], #reseñas select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  #reseñas button {
+    margin-top: 1rem;
+    background-color: #ff80b3;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+  }
+  #reseñas button:hover,
+  #reseñas button:focus {
+    background-color: #d4699a;
+    outline: none;
+  }
+
+  /* Lista de reseñas */
+  #lista-reseñas {
+    margin-top: 2rem;
+  }
+  .reseña-item {
+    border-top: 1px solid #ddd;
+    padding: 0.8rem 0;
+  }
+  .reseña-item:first-child {
+    border-top: none;
+  }
+  .reseña-usuario {
+    font-weight: bold;
+    color: #a675d0;
+  }
+  .reseña-texto {
+    margin: 0.3rem 0 0 0;
+  }
+  .reseña-calificacion {
+    color: #ff6699;
+  }
+
+  /* Cartelito flotante */
+  #cartelito-reseña {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff80b3;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(255, 128, 179, 0.6);
+    cursor: pointer;
+    font-weight: bold;
+    display: none; /* Empieza oculto */
+    z-index: 2000;
+    user-select: none;
+  }
+  #cartelito-reseña:hover {
+    background: #d4699a;
+  }
   </style>
 </head>
 <body>
@@ -473,6 +555,84 @@
         lightboxImage.alt = '';
       }
     });
+<!-- Contenido de la página -->
+
+<!-- Sección visible de reseñas -->
+<section id="reseñas" aria-label="Sección para dejar reseñas">
+  <h2>Déjanos tu reseña</h2>
+  <form id="form-reseñas" aria-describedby="desc-form">
+    <div id="desc-form" style="font-size:0.9rem; color:#666; margin-bottom:1rem;">
+      Tu opinión es muy importante para nosotros. Califica y comenta tu experiencia.
+    </div>
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+
+    <label for="calificacion">Calificación:</label>
+    <select id="calificacion" name="calificacion" required>
+      <option value="" disabled selected>Elige una</option>
+      <option value="5">★★★★★ Excelente</option>
+      <option value="4">★★★★ Muy buena</option>
+      <option value="3">★★★ Buena</option>
+      <option value="2">★★ Regular</option>
+      <option value="1">★ Mala</option>
+    </select>
+
+    <label for="comentario">Comentario:</label>
+    <textarea id="comentario" name="comentario" rows="4" placeholder="Escribe tu comentario..." required></textarea>
+
+    <button type="submit">Enviar reseña</button>
+  </form>
+
+  <div id="lista-reseñas" aria-live="polite" aria-relevant="additions" style="margin-top:2rem;">
+    <!-- Aquí aparecerán las reseñas enviadas -->
+  </div>
+</section>
+
+<!-- Cartelito flotante que aparece después -->
+<div id="cartelito-reseña" role="alert" tabindex="0" aria-label="Invitación a dejar una reseña">
+  ¿Quieres dejarnos una reseña? Haz clic aquí.
+</div>
+
+<script>
+  // Mostrar cartelito después de 30 segundos
+  setTimeout(() => {
+    const cartel = document.getElementById('cartelito-reseña');
+    cartel.style.display = 'block';
+  }, 30000); // 30000 ms = 30 segundos
+
+  // Al clicar cartelito, hacer scroll suave a la sección reseñas
+  document.getElementById('cartelito-reseña').addEventListener('click', () => {
+    document.getElementById('reseñas').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Manejar envío del formulario (solo en frontend para demo)
+  document.getElementById('form-reseñas').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nombre = e.target.nombre.value.trim();
+    const calificacion = e.target.calificacion.value;
+    const comentario = e.target.comentario.value.trim();
+
+    if(!nombre || !calificacion || !comentario) {
+      alert('Por favor completa todos los campos.');
+      return;
+    }
+
+    // Crear elemento de reseña
+    const div = document.createElement('div');
+    div.classList.add('reseña-item');
+    div.innerHTML = `
+      <div class="reseña-usuario">${nombre} <span class="reseña-calificacion">${'★'.repeat(calificacion)}</span></div>
+      <div class="reseña-texto">${comentario}</div>
+    `;
+
+    // Añadir al listado
+    document.getElementById('lista-reseñas').prepend(div);
+
+    // Limpiar formulario
+    e.target.reset();
+  });    
   </script>
 </body>
 </html>
